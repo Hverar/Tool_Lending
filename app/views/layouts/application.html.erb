@@ -10,11 +10,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body class="bg-white text-gray-900">
     <%= render "shared/navbar" %>
-    <%= render "shared/flashes" %>
-    <%= yield %>
+
+    <div class="min-h-screen bg-gray-50 px-6 py-8 max-w-7xl mx-auto">
+      <p class="notice text-green-600 mb-4"><%= notice %></p>
+      <p class="alert text-red-600 mb-4"><%= alert %></p>
+
+      <%= render "shared/flashes" %>
+      <%= yield %>
+    </div>
   </body>
 </html>
