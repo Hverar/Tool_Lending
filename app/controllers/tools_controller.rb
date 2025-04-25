@@ -1,4 +1,5 @@
 class ToolsController < ApplicationController
+
   before_action :set_tool, only: [:show, :create]
 
   def new
@@ -14,11 +15,11 @@ class ToolsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def index
-    @tools = Tool.all
-  end
-
+  
+ def index
+   @tools = Tool.all
+ end
+  
   def show
   end
 
