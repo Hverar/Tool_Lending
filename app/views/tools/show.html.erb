@@ -1,10 +1,25 @@
-<div class="card-tool-show">
-  <img src=<%= @tool.image_url %>/>
-  <div class="card-tool-infos">
-    <div>
-      <h2><%= @tool.name %></h2>
-      <p><%= @tool.description %></p>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-8">
+      <div class="bg-white rounded p-3 shadow">
+        <div class="card-tool-show">
+          <%= cl_image_tag @tool.photo.key %>
+          <div class="card-tool-infos">
+            <div>
+              <h2><%= @tool.name %></h2>
+              <p class="card-tool-condition">Condition: <%= @tool.condition %></p>
+              <p class="card-tool-description"><%= @tool.description %></p>
+            </div>
+            <div class="card-tool-renting">
+              <h2 class="card-tool-price"><%= @tool.price %></h2>
+              <button type="button" class="btn btn-primary">Rent this tool</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <h2 class="card-tool-pricing">$5.00</h2>
+    <div class="col">
+      <button type="button" class="btn btn-outline-primary">Back to all tools</button>
+    </div>
   </div>
 </div>
