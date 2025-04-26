@@ -20,7 +20,7 @@
                 <h5 class="card-title mb-1"><%= tool.name %></h5>
                 <p class="card-text text-muted mb-2"><%= truncate(tool.description, length: 80) %></p>
 
-                <!-- ✅ PRICE DISPLAYED HERE -->
+
                 <% if tool.tool_price.present? %>
                   <p class="text-success fw-bold mb-1">$<%= number_with_precision(tool.tool_price, precision: 2) %></p>
                 <% end %>
