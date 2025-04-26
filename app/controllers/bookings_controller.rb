@@ -5,6 +5,7 @@ class BookingsController < ApplicationController
     @booking = Booking.new
   end
 
+<<<<<<< HEAD
   def update
     @booking = Booking.find(params[:id])
 
@@ -25,6 +26,13 @@ class BookingsController < ApplicationController
     @booking.tool = @tool
     @booking.user = current_user  # assumes you have user authentication like Devise!
 
+=======
+  def create
+    @booking = Booking.new(booking_params)
+    @booking.tool = @tool
+    @booking.user = current_user # assumes you have user authentication like Devise!
+
+>>>>>>> e9a0b8180bd49514e2473402c7a85ecfd3f58d05
     if @booking.save
       redirect_to tool_path(@tool), notice: 'Booking was successfully created.'
     else

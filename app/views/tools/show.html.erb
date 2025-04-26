@@ -15,7 +15,7 @@
                 <h2>$<%= number_with_precision(@tool.tool_price, precision: 2) %></h2>
               </div>
               <div>
-                <button type="button" class="btn btn-primary">Rent this tool</button>
+                 <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
               </div>
             </div>
           </div>
@@ -26,5 +26,4 @@
       <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
     </div>
   </div>
-  <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
 </div>

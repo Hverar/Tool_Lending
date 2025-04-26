@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   # For health checks (default)
   get "up" => "rails/health#show", as: :rails_health_check
+  get '/my-tools', to: 'tools#my_tools', as: :user_tools
+
 end
