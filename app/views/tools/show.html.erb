@@ -11,15 +11,19 @@
               <p class="card-tool-description"><%= @tool.description %></p>
             </div>
             <div class="card-tool-renting">
-              <h2 class="card-tool-price"><%= @tool.price %></h2>
-              <button type="button" class="btn btn-primary">Rent this tool</button>
+              <div class="card-tool-price">
+                <h2>$<%= @tool.tool_price %></h2>
+              </div>
+              <div>
+                <button type="button" class="btn btn-primary">Rent this tool</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-outline-primary">Back to all tools</button>
+      <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
     </div>
   </div>
 </div>
