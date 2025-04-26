@@ -10,3 +10,32 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.hero-banner {
+  height: 400px;
+  background: url(asset-path("banner.avif")) no-repeat center center;
+  background-size: cover;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+.hero-banner h1 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.blockquote {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.custom-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: #333;
+  quotes: "“" "”" "‘" "’";
+  position: relative;
+  padding: 0 1rem;
+}

@@ -1,18 +1,31 @@
-
-
-
 <div class="container mt-5">
-  <h1 class="text-center fw-bold mb-5 border-bottom pb-3" style="font-size: 2rem;">
-    Available Tools
+  <h1 class="text-center fw-bold mb-3" style="font-size: 2.5rem;">
+    Tool Lending
   </h1>
+
+  <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? %>
+    <div class="alert alert-info text-center">
+      <p class="mb-2"><strong>Filtered by:</strong></p>
+      <ul class="list-inline mb-0">
+        <% if params[:condition].present? %>
+          <li class="list-inline-item">Condition: <%= params[:condition].capitalize %></li>
+        <% end %>
+        <% if params[:min_price].present? %>
+          <li class="list-inline-item">Min Price: $<%= params[:min_price] %></li>
+        <% end %>
+        <% if params[:max_price].present? %>
+          <li class="list-inline-item">Max Price: $<%= params[:max_price] %></li>
+        <% end %>
+      </ul>
+      <%= link_to "Clear Filters", tools_path, class: "btn btn-sm btn-outline-secondary mt-2" %>
+    </div>
+  <% end %>
 
   <% if @tools.any? %>
     <div class="row">
       <% @tools.each do |tool| %>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
           <div class="card h-100 shadow-sm">
-
-            <!-- Conditional Image Display -->
             <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 150px;">
               <% case tool.name %>
               <% when "Hammer" %>
@@ -48,9 +61,9 @@
       <% end %>
     </div>
   <% else %>
-    <p>No tools available yet. Check back soon!</p>
-  <% end %>
+    <p class="text-center mt-5">No tools available yet. Try adjusting your filters.</p>
 
+  <% end %>
   <%= link_to new_tool_path do %>
   <i class="fa-solid fa-screwdriver-wrench"></i> Add a tool
 <% end %>

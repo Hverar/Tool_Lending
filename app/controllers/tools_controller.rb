@@ -1,12 +1,25 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
 
-  def new
-    @tool = Tool.new
+  def index
+    @tool = Tool.all
+
+    if params[:condition].present?
+      @tool = @tool.where(condition: params[:condition])
+    end
+
+    if params[:min_price].present?
+      @tools = @tool.where("tool_price >= ?", params[:min_price])
+    end
+
+    if params[:max_price].present?
+      @tools = @tool.where("tool_price <= ?", params[:max_price])
+    end
   end
 
   def create
     @tool = Tool.new(tool_params)
+
     @tool.user = current_user # or however you're setting the user
     if @tool.save
       redirect_to tools_path, notice: "Tool listed successfully!"
@@ -14,10 +27,6 @@ class ToolsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
- def index
-   @tools = Tool.all
- end
 
   def show
   end
