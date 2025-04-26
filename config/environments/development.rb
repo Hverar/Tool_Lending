@@ -62,11 +62,6 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 89492124fc56acf433cb29c70459f44a389cae56
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

@@ -26,4 +26,5 @@
       <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
     </div>
   </div>
+  <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
 </div>

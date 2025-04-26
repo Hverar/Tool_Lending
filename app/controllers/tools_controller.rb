@@ -33,6 +33,7 @@ class ToolsController < ApplicationController
   end
 
   def show
+    @booking = Booking.new(tool: @tool) # Set up a new booking instance for the form
   end
 
   private
