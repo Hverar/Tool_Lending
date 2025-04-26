@@ -1,5 +1,5 @@
 class ToolsController < ApplicationController
-  before_action :set_tools, only: [:show]
+  before_action :set_tool, only: [:show]
 
   def index
     @tools = Tool.all
