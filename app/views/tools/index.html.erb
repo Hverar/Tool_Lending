@@ -26,18 +26,10 @@
       <% @tools.each do |tool| %>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
           <div class="card h-100 shadow-sm">
+
             <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 150px;">
-              <% case tool.name %>
-              <% when "Hammer" %>
-                <%= image_tag "hammer.webp", alt: "Hammer", class: "img-fluid p-2", style: "max-height: 100%; max-width: 100%;" %>
-              <% when "Hand Saw" %>
-                <%= image_tag "handsaw.png", alt: "Hand Saw", class: "img-fluid p-2", style: "max-height: 100%; max-width: 100%;" %>
-              <% when "Cordless Drill" %>
-                <%= image_tag "drill.avif", alt: "Cordless Drill", class: "img-fluid p-2", style: "max-height: 100%; max-width: 100%;" %>
-              <% when "Paint Roller" %>
-                <%= image_tag "paint roller.avif", alt: "Paint Roller", class: "img-fluid p-2", style: "max-height: 100%; max-width: 100%;" %>
-              <% when "Toolbox" %>
-                <%= image_tag "toolbox.avif", alt: "Toolbox", class: "img-fluid p-2", style: "max-height: 100%; max-width: 100%;" %>
+              <% if tool.photo.attached? %>
+                <%= cl_image_tag tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
               <% else %>
                 <span class="text-muted">[ Image Placeholder ]</span>
               <% end %>
@@ -62,9 +54,11 @@
     </div>
   <% else %>
     <p class="text-center mt-5">No tools available yet. Try adjusting your filters.</p>
-
   <% end %>
-  <%= link_to new_tool_path do %>
-  <i class="fa-solid fa-screwdriver-wrench"></i> Add a tool
-<% end %>
+
+  <div class="text-center mt-5">
+    <%= link_to new_tool_path, class: "btn btn-outline-primary" do %>
+      <i class="fa-solid fa-screwdriver-wrench"></i> Add a tool
+    <% end %>
+  </div>
 </div>
