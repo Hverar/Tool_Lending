@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.1].define(version: 2025_04_25_005609) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tools", force: :cascade do |t|
+
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -24,6 +27,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_25_005609) do
     t.string "condition"
     t.bigint "owner_id"
     t.index ["owner_id"], name: "index_tools_on_owner_id"
+
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,4 +45,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_25_005609) do
   end
 
   add_foreign_key "tools", "users", column: "owner_id"
+
 end
