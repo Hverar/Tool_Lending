@@ -5,15 +5,23 @@
         <div class="card-tool-show">
           <%= cl_image_tag @tool.photo.key %>
           <div class="card-tool-infos">
-            <div>
-              <h2><%= @tool.name %></h2>
+            <div class="row">
+              <div class="col-10">
+                <h2><%= @tool.name %></h2>
+              </div>
+              <div class="card-tool-price col-2">
+                <h3>$<%= number_with_precision(@tool.tool_price, precision: 2) %></h2>
+              </div>
               <p class="card-tool-condition">Condition: <%= @tool.condition %></p>
               <p class="card-tool-description"><%= @tool.description %></p>
             </div>
             <div class="card-tool-renting">
+<<<<<<< HEAD
               <div class="card-tool-price">
                 <h2>$<%= number_with_precision(@tool.tool_price, precision: 2) %></h2>
               </div>
+=======
+>>>>>>> 533b1691077e8f65fa9e1447e491c4d236dfd81a
               <div>
                  <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
               </div>
@@ -22,8 +30,10 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
+    <div class="col-4 text-center">
+      <div class="bg-white rounded p-3 shadow">
+        <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
+      </div>
     </div>
   </div>
 </div>
