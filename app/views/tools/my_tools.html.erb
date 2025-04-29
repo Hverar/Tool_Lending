@@ -1,36 +1,67 @@
 <div class="container mt-5">
   <h1 class="mb-4">My Tools</h1>
 
-  <% if @tools.any? %>
-    <div class="row">
-      <% @tools.each do |tool| %>
-        <div class="col-md-4 mb-4">
-          <div class="card p-3 shadow-sm">
-            <h5><%= tool.name %></h5>
-            <p><%= truncate(tool.description, length: 80) %></p>
-            <%= link_to "View Tool", tool_path(tool), class: "btn btn-outline-primary btn-sm" %>
+  <div class="d-flex justify-content-center gap-3 mb-4">
+    <%= link_to "Listed Tools", user_tools_path(view: "tools"), class: "btn btn-outline-primary #{params[:view] != 'offers' ? 'active' : ''}" %>
+    <%= link_to "Your Offers", user_tools_path(view: "offers"), class: "btn btn-outline-primary #{params[:view] == 'offers' ? 'active' : ''}" %>
+  </div>
+
+  <% if params[:view] == "offers" %>
+    <h2 class="mb-3">Your Booking Requests</h2>
+
+    <% if @my_offers.any? %>
+      <% @my_offers.each do |booking| %>
+        <div class="card p-3 mb-3">
+          <p><strong>Tool:</strong> <%= booking.tool.name %></p>
+          <p><strong>Owner:</strong> <%= booking.tool.user.email %></p>
+          <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
+          <p><strong>Status:</strong>
+            <span class="badge bg-secondary">
+              <%= booking.status.present? ? booking.status.capitalize : "Pending" %>
+            </span>
+          </p>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-info">You haven’t made any booking offers yet.</div>
+    <% end %>
+
+  <% else %>
+    <% if @tools.any? %>
+      <div class="row">
+        <% @tools.each do |tool| %>
+          <div class="col-md-4 mb-4">
+            <div class="card p-3 shadow-sm">
+              <h5><%= tool.name %></h5>
+              <p><%= truncate(tool.description, length: 80) %></p>
+              <%= link_to "View Tool", tool_path(tool), class: "btn btn-outline-primary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">You haven't listed any tools yet.</div>
+    <% end %>
+
+    <% if @pending_bookings.any? %>
+      <h2 class="mt-5">Pending Booking Requests</h2>
+      <% @pending_bookings.each do |booking| %>
+        <div class="card p-3 mb-3">
+          <p><strong>Tool:</strong> <%= booking.tool.name %></p>
+          <p><strong>Requested by:</strong> <%= booking.user.email %></p>
+          <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
+          <p><strong>Status:</strong>
+            <span class="badge bg-warning">
+              <%= booking.status.present? ? booking.status.capitalize : "Pending" %>
+            </span>
+          </p>
+
+          <div class="d-flex gap-2">
+            <%= button_to "Accept", booking_path(booking, status: "accepted"), method: :patch, class: "btn btn-success btn-sm" %>
+            <%= button_to "Decline", booking_path(booking, status: "declined"), method: :patch, class: "btn btn-danger btn-sm" %>
           </div>
         </div>
       <% end %>
-    </div>
-  <% else %>
-    <p class="text-muted">You haven't listed any tools yet.</p>
-  <% end %>
-
-  <% if @pending_bookings.any? %>
-    <h2 class="mt-5">Pending Booking Requests</h2>
-    <% @pending_bookings.each do |booking| %>
-      <div class="card p-3 mb-3">
-        <p><strong>Tool:</strong> <%= booking.tool.name %></p>
-        <p><strong>Requested by:</strong> <%= booking.user.email %></p>
-        <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
-        <p><strong>Status:</strong> <span class="badge bg-warning"><%= booking.status.capitalize %></span></p>
-
-        <div class="d-flex gap-2">
-          <%= button_to "Accept", booking_path(booking, status: "accepted"), method: :patch, class: "btn btn-success btn-sm" %>
-          <%= button_to "Decline", booking_path(booking, status: "declined"), method: :patch, class: "btn btn-danger btn-sm" %>
-        </div>
-      </div>
     <% end %>
   <% end %>
 </div>
