@@ -2,6 +2,8 @@
   <h1 class="text-center fw-bold mb-3" style="font-size: 2.5rem;">
     Tool Lending
   </h1>
+  <%= link_to "Your Tools", user_tools_path, class: "btn btn-outline-secondary" %>
+
 
   <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? %>
     <div class="alert alert-info text-center">

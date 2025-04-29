@@ -23,8 +23,8 @@ class ToolsController < ApplicationController
 
   def create
     @tool = Tool.new(tool_params)
+    @tool.user = current_user
 
-    @tools.user = current_user # or however you're setting the user
     if @tool.save
       redirect_to tools_path, notice: "Tool listed successfully!"
     else
@@ -33,7 +33,13 @@ class ToolsController < ApplicationController
   end
 
   def show
-    @booking = Booking.new(tool: @tool) # Set up a new booking instance for the form
+    @booking = Booking.new(tool: @tool)
+  end
+
+  def my_tools
+    @tools = current_user.tools
+    @pending_bookings = Booking.joins(:tool)
+                               .where(tools: { user_id: current_user.id }, status: "pending")
   end
 
   private
