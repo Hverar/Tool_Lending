@@ -38,7 +38,8 @@ class ToolsController < ApplicationController
 
   def my_tools
     @tools = current_user.tools
-    @pending_bookings = Booking.where(tool: @tools, status: "pending")
+    @pending_bookings = Booking.joins(:tool)
+                               .where(tools: { user_id: current_user.id }, status: "pending")
   end
 
   private
