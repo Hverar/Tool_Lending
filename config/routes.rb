@@ -5,13 +5,11 @@ Rails.application.routes.draw do
   resources :tools, only: [:index, :new, :create, :show] do
     resources :bookings, only: [:new, :create]
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :bookings, only: :destroy
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  resources :bookings, only: [:update, :destroy]
+
+  # For health checks (default)
   get "up" => "rails/health#show", as: :rails_health_check
+  get '/my-tools', to: 'tools#my_tools', as: :user_tools
 
-  # Defines the root path route ("/")
-  # root "posts#index"
 end
