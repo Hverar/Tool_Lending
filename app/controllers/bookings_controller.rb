@@ -28,6 +28,7 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to tool_path(@tool), notice: 'Booking was successfully created.'
     else
+      @booking = Booking.new
       render :new, status: :unprocessable_entity
     end
   end
