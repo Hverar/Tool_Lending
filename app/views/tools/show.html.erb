@@ -3,13 +3,12 @@
     <div class="col-8">
       <div class="bg-white rounded p-4 shadow">
         <div class="card-tool-show">
-          <%= cl_image_tag @tool.photo.key, crop: :fit, class: "img-fluid p-2 text-center" %>
+          <%= cl_image_tag @tool.photo.key %>
           <div class="card-tool-infos">
             <div class="card-tool-title d-flex justify-content-between">
               <div>
                 <h2><%= @tool.name %></h2>
               </div>
-
               <div>
                 <h2>$<%= number_with_precision(@tool.tool_price, precision: 2) %>/day</h2>
               </div>
@@ -17,16 +16,14 @@
             <p class="card-tool-condition">Condition: <%= @tool.condition %></p>
             <p class="card-tool-description"><%= @tool.description %></p>
           </div>
-
-          <div class="card-tool-renting">
-            <div>
-              <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
+            <div class="card-tool-renting">
+              <div>
+                 <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
+              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
-
     <div class="col-4">
       <div class="bg-white rounded p-3 shadow text-center">
         <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
