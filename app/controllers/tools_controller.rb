@@ -1,8 +1,11 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
+  before_action :authenticate_user!
+  before_action :authorize_owner!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @tools = Tool.all
+    @tools = current_user.owner? ? Tool.all : Tool.available
 
     if params[:condition].present?
       @tools = @tools.where(condition: params[:condition])
@@ -22,7 +25,7 @@ class ToolsController < ApplicationController
   end
 
   def edit
-    @tool = Tool.find(params[:id])
+    @tool = current_user.tools.find(params[:id])
   end
 
   def update
@@ -63,5 +66,11 @@ class ToolsController < ApplicationController
 
   def tool_params
     params.require(:tool).permit(:name, :description, :condition, :tool_price, :photo)
+  end
+
+  def authorize_owner!
+    return if current_user&.owner?
+
+    redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 end

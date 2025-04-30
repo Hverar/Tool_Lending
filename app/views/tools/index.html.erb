@@ -4,6 +4,14 @@
     <%= link_to "My Tools", user_tools_path, class: "btn btn-outline-secondary" %>
   </div>
 
+   <div>
+      <% if current_user.owner? %>
+        <p>You can add tools!</p>
+      <% else %>
+        <p>You can borrow tools.</p>
+      <% end %>
+   </div>
+
   <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? %>
     <div class="alert alert-info text-center">
       <p class="mb-2"><strong>Filtered by:</strong></p>

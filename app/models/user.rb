@@ -3,6 +3,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :tools
   has_many :bookings
+
+  def owner?
+    role == 'owner'
+  end
+
+  def consumer?
+    role == 'consumer'
+  end
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end
