@@ -24,6 +24,10 @@
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
   </div>
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, [['Consumer', 'consumer'], ['Owner', 'owner']] %>
+  </div>
 
   <div class="form-actions">
     <%= f.button :submit, "Sign up" %>
