@@ -33,6 +33,16 @@ class BookingsController < ApplicationController
     end
   end
 
+  def destroy
+    @booking = Booking.find(params[:id])
+    if @booking.user == current_user
+      @booking.destroy
+      redirect_to user_tools_path, notice: 'Booking was successfully deleted.'
+    else
+      redirect_to root_path, alert: 'Unauthorized.'
+    end
+  end
+
   private
 
   def set_tool
