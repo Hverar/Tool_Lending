@@ -32,7 +32,7 @@
               <% if tool.photo.attached? %>
                 <%= cl_image_tag tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
               <% else %>
-                <span class="text-muted">[ Image Placeholder ]</span>
+                <%= image_tag("tool-default.png") %>
               <% end %>
             </div>
 
