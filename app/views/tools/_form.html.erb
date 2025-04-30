@@ -7,8 +7,8 @@
             <%= f.input :name %>
             <%= f.input :description %>
             <%= f.input :condition, collection: ['New', 'Used - Like New', 'Used - Good', 'Used - Fair'], prompt: 'Select condition' %>
-            <%= f.input :price %>
-            <%= f.input :image_url, label: "Image URL" %>
+            <%= f.input :tool_price %>
+            <%= f.input :photo, label: "Photo", as: :file %>
             <%= f.submit class: 'btn btn-flat' %>
           <% end %>
       </div>
