@@ -21,6 +21,19 @@ class ToolsController < ApplicationController
     @tool = Tool.new
   end
 
+  def edit
+    @tool = Tool.find(params[:id])
+  end
+
+  def update
+    @tool = Tool.find(params[:id])
+    if @tool.update(tool_params)
+      redirect_to tools_path, notice: "Tool updated successfully!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def create
     @tool = Tool.new(tool_params)
     @tool.user = current_user
@@ -49,6 +62,6 @@ class ToolsController < ApplicationController
   end
 
   def tool_params
-    params.require(:tool).permit(:name, :description, :condition, :price, :photo)
+    params.require(:tool).permit(:name, :description, :condition, :tool_price, :photo)
   end
 end
