@@ -3,34 +3,65 @@
     <div class="col-8">
       <div class="bg-white rounded p-4 shadow">
         <div class="card-tool-show">
-          <%= cl_image_tag @tool.photo.key, crop: :fit, class: "img-fluid p-2 text-center" %>
+          <% if @tool.photo.attached? %>
+            <%= cl_image_tag @tool.photo.key, height: 300, crop: :fit, class: "img-fluid mb-4" %>
+          <% end %>
+
           <div class="card-tool-infos">
             <div class="card-tool-title d-flex justify-content-between">
               <div>
                 <h2><%= @tool.name %></h2>
               </div>
-
               <div>
                 <h2>$<%= number_with_precision(@tool.tool_price, precision: 2) %>/day</h2>
               </div>
             </div>
+
             <p class="card-tool-condition">Condition: <%= @tool.condition %></p>
             <p class="card-tool-description"><%= @tool.description %></p>
           </div>
 
-          <div class="card-tool-renting">
-            <div>
-              <%= render 'bookings/form', tool: @tool, booking: Booking.new %>
-            </div>
+          <div class="card-tool-renting mt-4">
+            <% if @booking.errors.any? %>
+              <div class="alert alert-danger">
+                <h5>Booking Error</h5>
+                <ul>
+                  <% @booking.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <% if current_user == @tool.user %>
+              <div class="alert alert-warning">You cannot book your own tool.</div>
+            <% else %>
+              <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
+
+              <% if existing_booking.present? %>
+                <div class="alert alert-info mt-3">
+                  You've already made a booking for this tool.
+                </div>
+
+                <%= button_to "Cancel Booking", booking_path(existing_booking),
+                      method: :delete,
+                      data: { confirm: "Are you sure you want to cancel your booking?" },
+                      class: "btn btn-danger mt-2" %>
+              <% else %>
+                <%= render 'bookings/form', tool: @tool, booking: @booking %>
+              <% end %>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
 
     <div class="col-4">
-      <div class="bg-white rounded p-3 shadow text-center">
-        <%= link_to "Back to all tools", tools_path, :class => "btn btn-primary" %>
-        <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-primary" %>
+      <div class="bg-white rounded p-3 shadow text-center d-flex flex-column gap-3">
+        <%= link_to "Back to all tools", tools_path, class: "btn btn-primary" %>
+        <% if current_user == @tool.user %>
+          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary" %>
+        <% end %>
       </div>
     </div>
   </div>
