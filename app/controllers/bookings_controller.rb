@@ -24,6 +24,11 @@ class BookingsController < ApplicationController
     @booking.tool = @tool
     @booking.user = current_user  # assumes you have user authentication like Devise!
 
+    if @tool.user == current_user
+      flash[:alert] = "You cannot book your own tool."
+      return redirect_to tool_path(@tool)
+    end
+
 
     if @booking.save
       redirect_to tool_path(@tool), notice: 'Booking was successfully created.'
@@ -32,6 +37,19 @@ class BookingsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    @booking = Booking.find(params[:id])
+    tool = @booking.tool
+
+    if @booking.user == current_user
+      @booking.destroy
+      redirect_to tool_path(tool), notice: 'Booking was successfully deleted.'
+    else
+      redirect_to root_path, alert: 'Unauthorized.'
+    end
+  end
+
 
   private
 

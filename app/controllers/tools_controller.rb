@@ -1,7 +1,7 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
   before_action :authenticate_user!
-  before_action :authorize_owner!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authorize_owner!, only: [:new, :create, :edit, :update]
 
   def index
     @tools = Tool.all
@@ -28,10 +28,14 @@ class ToolsController < ApplicationController
     @tool = current_user.tools.find(params[:id])
   end
 
+  def edit
+    @tool = current_user.tools.find(params[:id])
+  end
+
   def update
-    @tool = Tool.find(params[:id])
+    @tool = current_user.tools.find(params[:id])
     if @tool.update(tool_params)
-      redirect_to tools_path, notice: "Tool updated successfully!"
+      redirect_to tool_path(@tool), notice: "Tool updated successfully!"
     else
       render :edit, status: :unprocessable_entity
     end
