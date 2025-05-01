@@ -1,7 +1,7 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
   before_action :authenticate_user!
-  before_action :authorize_owner!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authorize_owner!, only: [:new, :create, :edit, :update]
 
   def index
     @tools = Tool.all
