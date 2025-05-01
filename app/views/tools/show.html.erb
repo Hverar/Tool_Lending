@@ -33,19 +33,23 @@
               </div>
             <% end %>
 
-            <% existing_booking = current_user.bookings.find_by(tool_id: @tool.id) %>
-
-            <% if existing_booking.present? %>
-              <div class="alert alert-info mt-3">
-                You've already made a booking for this tool.
-              </div>
-
-              <%= button_to "Cancel Booking", booking_path(existing_booking),
-                    method: :delete,
-                    data: { confirm: "Are you sure you want to cancel your booking?" },
-                    class: "btn btn-danger mt-2" %>
+            <% if current_user == @tool.user %>
+              <div class="alert alert-warning">You cannot book your own tool.</div>
             <% else %>
-              <%= render 'bookings/form', tool: @tool, booking: @booking %>
+              <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
+
+              <% if existing_booking.present? %>
+                <div class="alert alert-info mt-3">
+                  You've already made a booking for this tool.
+                </div>
+
+                <%= button_to "Cancel Booking", booking_path(existing_booking),
+                      method: :delete,
+                      data: { confirm: "Are you sure you want to cancel your booking?" },
+                      class: "btn btn-danger mt-2" %>
+              <% else %>
+                <%= render 'bookings/form', tool: @tool, booking: @booking %>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -55,7 +59,9 @@
     <div class="col-4">
       <div class="bg-white rounded p-3 shadow text-center d-flex flex-column gap-3">
         <%= link_to "Back to all tools", tools_path, class: "btn btn-primary" %>
-        <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary" %>
+        <% if current_user == @tool.user %>
+          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary" %>
+        <% end %>
       </div>
     </div>
   </div>
