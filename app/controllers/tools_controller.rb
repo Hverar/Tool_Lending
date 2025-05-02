@@ -5,7 +5,6 @@ class ToolsController < ApplicationController
 
   def index
     @tools = Tool.all
-    @tools = current_user.owner? ? Tool.all : Tool.available
 
     if params[:condition].present?
       @tools = @tools.where(condition: params[:condition])
