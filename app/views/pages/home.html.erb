@@ -16,7 +16,7 @@
   <div class="card-body text text-center py-5">
     <%= form_with url: tools_path, method: :get, local: true, class: "row g-2 justify-content-center mb-4" do |f| %>
       <div class="col-auto">
-        <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select menu" %>
+        <%= f.select :condition, options_for_select(["Condition", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select menu" %>
       </div>
       <div class="col-auto">
         <%= f.number_field :min_price, placeholder: "Min $", value: params[:min_price], class: "form-control menu" %>
