@@ -14,6 +14,8 @@
     <%= f.input :last_name %>
     <%= f.input :profile_photo, as: :file, label: "Upload Profile Photo" %>
 
+    <%= f.input :role, collection: [['Consumer', 'consumer'], ['Owner', 'owner']], prompt: 'Select your role' %>
+
     <%= f.input :password, hint: "Leave blank if you don't want to change it" %>
     <%= f.input :password_confirmation %>
     <%= f.input :current_password, hint: "We need your current password to confirm your changes" %>
@@ -23,16 +25,6 @@
     <%= f.button :submit, "Update", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-
-<hr>
-
-<div class="field">
-    <%= f.label :role %><br />
-    <%= f.select :role, [['Consumer', 'consumer'], ['Owner', 'owner']] %>
-</div>
-<h3>Cancel my account</h3>
-
 
 <h3>Cancel my account</h3>
 <p>
