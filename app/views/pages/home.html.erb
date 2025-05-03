@@ -1,70 +1,56 @@
-<div class="hero-banner d-flex justify-content-center align-items-center text-center text-white">
-  <h1 class="fw-bold display-1 text-shadow">Tool Lending</h1>
-</div>
-
-<div class="text-center py-4 bg-white" style="margin-top: -1rem;">
-  <blockquote class="custom-quote" style="max-width: 800px; margin: 0 auto;">
-    <p class="mb-1">
-      “You can dream, create, design, and build the most wonderful place in the world. But it requires people to make the dream a reality.”
-    </p>
-    <footer class="blockquote-footer mt-1">Walt Disney</footer>
-  </blockquote>
-</div>
-
-<div class="container text-center py-5">
-  <%= form_with url: tools_path, method: :get, local: true, class: "mb-4" do |f| %>
-    <div class="row justify-content-center g-3">
-      <div class="col-md-6">
-        <%= f.text_field :query, placeholder: "Search tools...", class: "form-control" %>
-      </div>
-
-      <div class="col-md-3">
-        <div class="dropdown">
-          <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            Filters
-          </button>
-          <div class="dropdown-menu p-4" style="min-width: 300px;">
-            <div class="mb-3">
-              <%= f.label :condition %>
-              <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select" %>
-            </div>
-            <div class="mb-3">
-              <%= f.label :min_price, "Min $" %>
-              <%= f.number_field :min_price, value: params[:min_price], class: "form-control", placeholder: "Min $" %>
-            </div>
-            <div class="mb-3">
-              <%= f.label :max_price, "Max $" %>
-              <%= f.number_field :max_price, value: params[:max_price], class: "form-control", placeholder: "Max $" %>
-            </div>
-            <%= f.submit "Apply Filters", class: "btn btn-primary w-100", id: "apply-filters-btn" %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-    <%= link_to "View All Tools", tools_path, class: "btn btn-primary btn-lg px-5 py-2" %>
-    <%= link_to "List a Tool", new_tool_path, class: "btn btn-outline-primary btn-lg px-5 py-2" %>
+<div style="background-color: #9DAB86;">
+  <div class="hero-banner d-flex justify-content-center align-items-center text-center text-white">
+    <h1 class="fw-bold display-1 text-shadow">Tool Lending</h1>
   </div>
 
-  <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? || params[:query].present? %>
-    <div class="alert alert-info mt-4 mx-auto" style="max-width: 400px;">
-      <strong>Filters applied:</strong>
-      <ul class="mb-0">
-        <% if params[:query].present? %>
-          <li>Search: "<%= params[:query] %>"</li>
-        <% end %>
-        <% if params[:condition].present? %>
-          <li>Condition: <%= params[:condition].capitalize %></li>
-        <% end %>
-        <% if params[:min_price].present? %>
-          <li>Min Price: $<%= params[:min_price] %></li>
-        <% end %>
-        <% if params[:max_price].present? %>
-          <li>Max Price: $<%= params[:max_price] %></li>
-        <% end %>
-      </ul>
+  <div class="text-center py-4" style="margin-top: -1rem;">
+    <blockquote class="custom-quote" style="max-width: 800px; margin: 0 auto;">
+      <p class="mb-1">
+        “You can dream, create, design, and build the most wonderful place in the world. But it requires people to make the dream a reality.”
+      </p>
+      <footer class="blockquote-footer mt-1">Walt Disney</footer>
+    </blockquote>
+  </div>
+
+
+  <div class="container text-center py-5">
+    <%= form_with url: tools_path, method: :get, local: true, class: "row g-2 justify-content-center mb-4" do |f| %>
+      <div class="col-auto">
+        <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select menu" %>
+      </div>
+      <div class="col-auto">
+        <%= f.number_field :min_price, placeholder: "Min $", value: params[:min_price], class: "form-control menu" %>
+      </div>
+      <div class="col-auto">
+        <%= f.number_field :max_price, placeholder: "Max $", value: params[:max_price], class: "form-control menu" %>
+      </div>
+      <div class="col-auto">
+        <%= f.submit "Search", class: "btn btn-outline-warning" %>
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <%= link_to "View All Tools", tools_path, class: "btn btn-warning btn-lg px-5 py-2" %>
+      <%= link_to "Your Tools", user_tools_path, class: "btn btn-outline-success" %>
+      <%= link_to "List a Tool", new_tool_path, class: "btn btn-outline-warning btn-lg px-5 py-2" %>
     </div>
-  <% end %>
+
+
+    <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? %>
+      <div class="alert alert-info mt-4 mx-auto" style="max-width: 400px;">
+        <strong>Filters applied:</strong>
+        <ul class="mb-0">
+          <% if params[:condition].present? %>
+            <li>Condition: <%= params[:condition].capitalize %></li>
+          <% end %>
+          <% if params[:min_price].present? %>
+            <li>Min Price: $<%= params[:min_price] %></li>
+          <% end %>
+          <% if params[:max_price].present? %>
+            <li>Max Price: $<%= params[:max_price] %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
 </div>
