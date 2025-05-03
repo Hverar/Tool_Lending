@@ -42,7 +42,7 @@
           <%= form_with model: [@tool, Rating.new], local: true do |f| %>
             <div class="mb-3 d-flex align-items-center gap-3">
               <%= f.select :score, options_for_select(1..5), {}, class: "form-select w-auto" %>
-              <%= f.submit "Submit Rating", class: "btn btn-outline-success btn-sm" %>
+              <%= f.submit "Rate", class: "btn btn-outline-success btn-sm rounded-pill px-3" %>
 
             </div>
 
@@ -58,14 +58,14 @@
             <%= button_to "Cancel Booking", booking_path(existing_booking),
                   method: :delete,
                   data: { confirm: "Are you sure you want to cancel your booking?" },
-                  class: "btn btn-danger" %>
+                  class: "btn btn-danger rounded-pill" %>
           <% else %>
             <%= render 'bookings/form', tool: @tool, booking: @booking %>
           <% end %>
         <% end %>
 
         <% if current_user == @tool.user %>
-          <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mt-3" %>
+          <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
         <% end %>
 
       </div>
@@ -73,9 +73,9 @@
 
     <div class="col-4">
       <div class="card-body rounded p-3 shadow text-center d-flex flex-column gap-3">
-        <%= link_to "Back to all tools", tools_path, class: "btn btn-warning" %>
+        <%= link_to "Back to all tools", tools_path, class: "btn btn-warning rounded-pill" %>
         <% if current_user == @tool.user %>
-          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary" %>
+          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary rounded-pill" %>
         <% end %>
       </div>
     </div>
