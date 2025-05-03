@@ -1,4 +1,4 @@
-<div class="container mt-5">
+\<div class="container mt-5">
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
     <h1 class="mb-0 me-auto" style="white-space: nowrap;">Tool Lending</h1>
 
@@ -30,34 +30,11 @@
 
   <hr class="my-4">
 
-
-  <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? || params[:query].present? %>
-    <div class="alert alert-info text-center">
-      <p class="mb-2"><strong>Filtered by:</strong></p>
-      <ul class="list-inline mb-0">
-        <% if params[:query].present? %>
-          <li class="list-inline-item">Search: "<%= params[:query] %>"</li>
-        <% end %>
-        <% if params[:condition].present? %>
-          <li class="list-inline-item">Condition: <%= params[:condition].capitalize %></li>
-        <% end %>
-        <% if params[:min_price].present? %>
-          <li class="list-inline-item">Min Price: $<%= params[:min_price] %></li>
-        <% end %>
-        <% if params[:max_price].present? %>
-          <li class="list-inline-item">Max Price: $<%= params[:max_price] %></li>
-        <% end %>
-      </ul>
-      <%= link_to "Clear Filters", tools_path, class: "btn btn-sm btn-outline-secondary mt-2" %>
-    </div>
-  <% end %>
-
   <% if @tools.any? %>
     <div class="row">
       <% @tools.each do |tool| %>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
           <div class="card h-100 shadow-sm border-0 rounded-4">
-
             <div class="card-img-top d-flex align-items-center justify-content-center bg-light rounded-top-4 overflow-hidden" style="height: 150px;">
               <% if tool.photo.attached? %>
                 <%= cl_image_tag tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
@@ -65,7 +42,6 @@
                 <%= image_tag("tool-default.png", class: "img-fluid") %>
               <% end %>
             </div>
-
             <div class="card-body d-flex flex-column justify-content-between">
               <div>
                 <h5 class="card-title mb-1"><%= tool.name %></h5>
@@ -74,8 +50,14 @@
                 <% if tool.tool_price.present? %>
                   <p class="text-success fw-bold mb-1">$<%= number_with_precision(tool.tool_price, precision: 2) %></p>
                 <% end %>
-              </div>
 
+                <% avg_rating = tool.ratings.average(:score)&.round(1) %>
+                <% if avg_rating %>
+                  <p class="mb-0 text-warning">★ <%= avg_rating %> / 5</p>
+                <% else %>
+                  <p class="mb-0 text-muted">No ratings yet</p>
+                <% end %>
+              </div>
               <%= link_to "View", tool_path(tool), class: "btn btn-success btn-sm mt-3 w-100 rounded-pill" %>
             </div>
           </div>
