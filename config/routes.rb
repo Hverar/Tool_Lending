@@ -12,7 +12,12 @@ Rails.application.routes.draw do
       patch :decline
     end
   end
-  # For health checks (default)
-  get "up" => "rails/health#show", as: :rails_health_check
+
+  # Custom routes
   get '/my-tools', to: 'tools#my_tools', as: :user_tools
+  get '/my-bookings', to: 'bookings#my_bookings', as: :user_bookings
+  get '/profile', to: 'profiles#show', as: :user_profile
+
+  # Health check
+  get "up" => "rails/health#show", as: :rails_health_check
 end
