@@ -1,4 +1,4 @@
-\<div class="container py-5">
+<div class="container py-5">
   <div class="row">
     <div class="col-8">
       <div class="bg-white rounded p-4 shadow">
@@ -18,7 +18,13 @@
           <p class="mb-3 text-muted">No ratings yet</p>
         <% end %>
 
-        <% if current_user && current_user != @tool.user %>
+       <% if current_user && current_user != @tool.user %>
+        <% existing_rating = @tool.ratings.find_by(user_id: current_user.id) %>
+        <% accepted_booking = @tool.bookings.exists?(user_id: current_user.id, status: "accepted") %>
+
+        <% if existing_rating %>
+          <p class="text-muted">You’ve already rated this tool: ★ <%= existing_rating.score %> / 5</p>
+        <% elsif accepted_booking %>
           <h5 class="mt-4">Rate this tool</h5>
           <%= form_with model: [@tool, Rating.new], local: true do |f| %>
             <div class="mb-3 d-flex align-items-center gap-3">
@@ -26,7 +32,12 @@
               <%= f.submit "Submit Rating", class: "btn btn-outline-success btn-sm" %>
             </div>
           <% end %>
+        <% else %>
+          <p class="text-muted">You must have an accepted booking to rate this tool.</p>
         <% end %>
+      <% end %>
+
+
 
         <% if current_user && current_user != @tool.user %>
           <%= render 'bookings/form', tool: @tool, booking: @booking %>
