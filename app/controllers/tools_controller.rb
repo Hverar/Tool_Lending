@@ -1,7 +1,7 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
   before_action :authenticate_user!
-  before_action :authorize_owner!, only: [:new, :create, :edit, :update]
+  before_action :authorize_owner!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @tools = Tool.all
@@ -59,6 +59,16 @@ class ToolsController < ApplicationController
     @tools = current_user.tools
     @pending_bookings = Booking.joins(:tool).where(tools: { user_id: current_user.id }, status: "pending")
     @my_offers = current_user.bookings.includes(:tool)
+  end
+
+  def destroy
+    @tool = Tool.find(params[:id])
+    if @tool.user == current_user
+      @tool.destroy
+      redirect_to tools_path, notice: "Tool was successfully deleted."
+    else
+      redirect_to tools_path, alert: "You are not authorized to delete this tool."
+    end
   end
 
   private
