@@ -1,7 +1,7 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-8">
-      
+
       <div class="card-body rounded p-4 shadow">
 
         <% if @tool.photo.attached? %>
@@ -22,7 +22,6 @@
           <p class="mb-3 text-muted">No ratings yet</p>
         <% end %>
 
-        <%# Show rating form only for signed-in non-owners %>
         <% if current_user && current_user != @tool.user %>
           <h5 class="mt-4">Rate this tool</h5>
           <%= form_with model: [@tool, Rating.new], local: true do |f| %>
@@ -33,10 +32,6 @@
             </div>
           <% end %>
         <% end %>
-
-        <hr>
-
-        <%# Booking Section %>
         <% if current_user == @tool.user %>
           <div class="alert alert-warning">You cannot book your own tool.</div>
         <% else %>
@@ -70,4 +65,3 @@
     </div>
   </div>
 </div>
-
