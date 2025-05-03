@@ -1,35 +1,34 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<div class="navbar navbar-expand-sm navbar-dark bg-dark py-3">
   <div class="container-fluid">
     <%= link_to root_path do %>
-      <%= image_tag "tool-lending.png", alt: "Logo", class: "navbar-logo" %>
+      <%= image_tag "tool-lending.png", alt: "Logo", class: "navbar-logo me-3", style: "height: 48px; width: 48px; object-fit: cover; border-radius: 50%;" %>
     <% end %>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-        <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to "Home", root_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "My Tools", user_tools_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "My Bookings", user_tools_path(view: "offers"), class: "nav-link" %>
-          </li>
-        <% end %>
-      </ul>
-
       <% if user_signed_in? %>
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav me-auto align-items-center gap-3 fs-5">
+          <li class="nav-item">
+            <%= link_to "My Tools", user_tools_path, class: "nav-link text-white fw-semibold" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "My Bookings", user_tools_path(view: "offers"), class: "nav-link text-white fw-semibold" %>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto align-items-center gap-3">
+          <li class="nav-item">
+            <%= link_to "List a Tool", new_tool_path, class: "btn btn-success rounded-pill px-4 py-2" %>
+          </li>
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if current_user.profile_photo.attached? %>
-                <%= image_tag url_for(current_user.profile_photo), class: "avatar rounded-circle", alt: "Profile", style: "height: 40px; width: 40px; object-fit: cover;" %>
+                <%= image_tag url_for(current_user.profile_photo), class: "rounded-circle", alt: "Profile", style: "height: 45px; width: 45px; object-fit: cover;" %>
               <% else %>
-                <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "default avatar", style: "height: 40px; width: 40px;" %>
+                <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle", alt: "Default avatar", style: "height: 45px; width: 45px;" %>
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -39,9 +38,9 @@
           </li>
         </ul>
       <% else %>
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center fs-5">
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Login", new_user_session_path, class: "nav-link text-white fw-semibold" %>
           </li>
         </ul>
       <% end %>
