@@ -51,6 +51,11 @@
                 <%= render 'bookings/form', tool: @tool, booking: @booking %>
               <% end %>
             <% end %>
+            <div>
+              <% if @tool.user == current_user %>
+                <%= link_to "Delete", tools_path(@tools), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>

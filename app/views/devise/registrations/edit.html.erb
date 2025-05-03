@@ -24,7 +24,15 @@
   </div>
 <% end %>
 
+
 <hr>
+
+<div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, [['Consumer', 'consumer'], ['Owner', 'owner']] %>
+</div>
+<h3>Cancel my account</h3>
+
 
 <h3>Cancel my account</h3>
 <p>
