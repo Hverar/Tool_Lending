@@ -2,7 +2,7 @@
   <h1 class="mb-4">My Tools</h1>
 
   <div class="d-flex justify-content-center mt-2 mb-4">
-    <%= link_to "← Back to All Tools", tools_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "← Back to All Tools", tools_path, class: "btn btn-outline-success" %>
   </div>
 
   <% if params[:view] == "offers" %>
@@ -37,10 +37,10 @@
       <div class="row">
         <% @tools.each do |tool| %>
           <div class="col-md-4 mb-4">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3 shadow-sm card-body">
               <h5><%= tool.name %></h5>
               <p><%= truncate(tool.description, length: 80) %></p>
-              <%= link_to "View Tool", tool_path(tool), class: "btn btn-outline-primary btn-sm" %>
+              <%= link_to "View Tool", tool_path(tool), class: "btn btn-outline-warning btn-sm" %>
             </div>
           </div>
         <% end %>
@@ -81,8 +81,8 @@
           </p>
 
           <div class="d-flex gap-2">
-            <%= button_to "Accept", booking_path(booking, status: "accepted"), method: :patch, class: "btn btn-success btn-sm" %>
-            <%= button_to "Decline", booking_path(booking, status: "declined"), method: :patch, class: "btn btn-danger btn-sm" %>
+            <%= button_to "Accept", booking_path(booking, status: "accepted"), method: :patch, class: "btn btn-warning btn-sm" %>
+            <%= button_to "Decline", booking_path(booking, status: "declined"), method: :patch, class: "btn btn-success btn-sm" %>
           </div>
         </div>
       <% end %>

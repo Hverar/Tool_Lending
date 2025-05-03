@@ -1,4 +1,4 @@
-<%= simple_form_for([@tool, @booking]) do |f| %>
+<%= simple_form_for([@tool, @booking], html: { class: "booking-form" }) do |f| %>
   <%= f.input :start_date,
               as: :string,
               input_html: { data: { controller: "datepicker" } } %>
@@ -7,5 +7,5 @@
               as: :string,
               input_html: { data: { controller: "datepicker" } } %>
 
-  <%= f.submit "Book", class: "btn btn-primary" %>
+  <%= f.submit "Book", class: "btn btn-warning" %>
 <% end %>
