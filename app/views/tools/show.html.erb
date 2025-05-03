@@ -1,13 +1,13 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-8">
-      <div class="bg-white rounded p-4 shadow">
+      <div class="card-body rounded p-4 shadow">
         <div class="card-tool-show">
           <% if @tool.photo.attached? %>
             <%= cl_image_tag @tool.photo.key, height: 300, crop: :fit, class: "img-fluid mb-4" %>
           <% end %>
 
-          <div class="card-tool-infos">
+          <div class= "card-tool-infos">
             <div class="card-tool-title d-flex justify-content-between">
               <div>
                 <h2><%= @tool.name %></h2>
@@ -62,8 +62,8 @@
     </div>
 
     <div class="col-4">
-      <div class="bg-white rounded p-3 shadow text-center d-flex flex-column gap-3">
-        <%= link_to "Back to all tools", tools_path, class: "btn btn-primary" %>
+      <div class="card-body rounded p-3 shadow text-center d-flex flex-column gap-3">
+        <%= link_to "Back to all tools", tools_path, class: "btn btn-warning" %>
         <% if current_user == @tool.user %>
           <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary" %>
         <% end %>

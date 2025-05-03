@@ -1,2 +1,28 @@
 // Import page-specific CSS files here.
 @import "home";
+.btn-warning {
+  background-color: #E08F62;
+  border-color: #E08F62;
+
+  &:hover {
+    background-color: darken(#E08F62, 5%);
+    border-color: darken(#E08F62, 5%);
+  }
+}
+.btn-outline-warning {
+  border-color: #E08F62;
+  color: black;
+  &:hover {
+    background-color: darken(#E08F62, 5%);
+    border-color: darken(#E08F62, 5%);
+  }
+}
+
+.btn-outline-success {
+  border-color: #CC7351;
+  color: black;
+  &:hover {
+    background-color: darken(#CC7351, 5%);
+    border-color: darken(#CC7351, 5%);
+  }
+}

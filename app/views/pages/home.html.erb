@@ -13,7 +13,7 @@
   </div>
 
 
-  <div class="container text-center py-5">
+  <div class="card-body text text-center py-5">
     <%= form_with url: tools_path, method: :get, local: true, class: "row g-2 justify-content-center mb-4" do |f| %>
       <div class="col-auto">
         <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select menu" %>
