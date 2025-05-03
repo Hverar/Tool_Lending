@@ -1,21 +1,43 @@
 <div class="container mt-5">
-  <div class="mb-3">
-  <h1 class="mb-4">Tool Lending</h1>
-</div>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+    <h1 class="mb-0 me-auto" style="white-space: nowrap;">Tool Lending</h1>
+
+    <%= form_with url: tools_path, method: :get, local: true, class: "d-flex align-items-center gap-2 w-100 w-md-auto" do |f| %>
+      <%= f.text_field :query, placeholder: "Search tools...", class: "form-control form-control-lg rounded-pill px-4" %>
+
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary btn-lg rounded-pill px-4" type="button" data-bs-toggle="dropdown">
+          Filters
+        </button>
+        <div class="dropdown-menu p-4">
+          <div class="mb-3">
+            <%= f.label :condition, "Condition", class: "form-label" %>
+            <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :min_price, "Min Price", class: "form-label" %>
+            <%= f.number_field :min_price, value: params[:min_price], class: "form-control", placeholder: "$" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :max_price, "Max Price", class: "form-label" %>
+            <%= f.number_field :max_price, value: params[:max_price], class: "form-control", placeholder: "$" %>
+          </div>
+          <%= f.submit "Apply Filters", class: "btn btn-primary w-100" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <hr class="my-4">
 
 
-   <div>
-      <% if current_user.owner? %>
-        <p>You can add tools!</p>
-      <% else %>
-        <p>You can borrow tools.</p>
-      <% end %>
-   </div>
-
-  <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? %>
+  <% if params[:condition].present? || params[:min_price].present? || params[:max_price].present? || params[:query].present? %>
     <div class="alert alert-info text-center">
       <p class="mb-2"><strong>Filtered by:</strong></p>
       <ul class="list-inline mb-0">
+        <% if params[:query].present? %>
+          <li class="list-inline-item">Search: "<%= params[:query] %>"</li>
+        <% end %>
         <% if params[:condition].present? %>
           <li class="list-inline-item">Condition: <%= params[:condition].capitalize %></li>
         <% end %>
@@ -34,13 +56,13 @@
     <div class="row">
       <% @tools.each do |tool| %>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm border-0 rounded-4">
 
-            <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 150px;">
+            <div class="card-img-top d-flex align-items-center justify-content-center bg-light rounded-top-4 overflow-hidden" style="height: 150px;">
               <% if tool.photo.attached? %>
                 <%= cl_image_tag tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
               <% else %>
-                <%= image_tag("tool-default.png") %>
+                <%= image_tag("tool-default.png", class: "img-fluid") %>
               <% end %>
             </div>
 
@@ -54,9 +76,8 @@
                 <% end %>
               </div>
 
-              <%= link_to "View", tool_path(tool), class: "btn btn-primary btn-sm mt-3 w-100" %>
+              <%= link_to "View", tool_path(tool), class: "btn btn-success btn-sm mt-3 w-100 rounded-pill" %>
             </div>
-
           </div>
         </div>
       <% end %>
@@ -64,10 +85,4 @@
   <% else %>
     <p class="text-center mt-5">No tools available yet. Try adjusting your filters.</p>
   <% end %>
-
-  <div class="text-center mt-5">
-    <%= link_to new_tool_path, class: "btn btn-outline-primary" do %>
-      <i class="fa-solid fa-screwdriver-wrench"></i> Add a tool
-    <% end %>
-  </div>
 </div>
