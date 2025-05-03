@@ -44,23 +44,19 @@
           <div class="alert alert-warning rounded-pill">You cannot book your own tool.</div>
         <% else %>
           <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
-
           <% if existing_booking.present? %>
             <p class="fw-bold">You have booked this tool.</p>
             <%= button_to "Cancel Booking", booking_path(existing_booking),
                   method: :delete,
                   data: { confirm: "Are you sure you want to cancel your booking?" },
-                  class: "btn btn-danger rounded-pill px-4" %>
+                  class: "btn btn-danger rounded-pill" %>
           <% else %>
             <%= render 'bookings/form', tool: @tool, booking: @booking %>
           <% end %>
         <% end %>
 
         <% if current_user == @tool.user %>
-          <%= link_to "Delete", tool_path(@tool),
-              method: :delete,
-              data: { confirm: "Are you sure?" },
-              class: "btn btn-danger mt-3 rounded-pill px-4" %>
+          <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
         <% end %>
 
       </div>
@@ -68,9 +64,9 @@
 
     <div class="col-4">
       <div class="card-body shadow text-center d-flex flex-column gap-3" style="border-radius: 2rem; padding: 2rem;">
-        <%= link_to "Back to all tools", tools_path, class: "btn btn-warning rounded-pill px-4" %>
+        <%= link_to "Back to all tools", tools_path, class: "btn btn-warning rounded-pill" %>
         <% if current_user == @tool.user %>
-          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary rounded-pill px-4" %>
+          <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary rounded-pill" %>
         <% end %>
       </div>
     </div>
