@@ -16,14 +16,21 @@
 
     <% if @my_offers.any? %>
       <% @my_offers.each do |booking| %>
-        <div class="card p-3 mb-3">
+        <div data-controller="reveal-phone-number" class="card p-3 mb-3">
           <p><strong>Tool:</strong> <%= booking.tool.name %></p>
-          <p><strong>Owner:</strong> <%= booking.tool.user.email %></p>
+          <p><strong>Owner:</strong> <%= booking.tool.user.first_name %></p>
           <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
           <p><strong>Status:</strong>
             <span class="badge bg-secondary">
               <%= booking.status.present? ? booking.status.capitalize : "Pending" %>
             </span>
+          </p>
+          <p><strong>Contact:</strong>
+            <% if booking.status == "accepted" %>
+              <%= booking.tool.user.phone_number %>
+            <% else %>
+              <%= "Information available once your booking is accepted." %>
+            <% end %>
           </p>
         </div>
       <% end %>
