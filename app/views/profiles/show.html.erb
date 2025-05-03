@@ -1,0 +1,27 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4 shadow d-flex flex-row align-items-center justify-content-between">
+
+        <div class="w-75 pe-4">
+          <h1 class="mb-4">Account</h1>
+          <p><strong>Email:</strong> <%= @user.email %></p>
+          <p><strong>First name:</strong> <%= @user.first_name %></p>
+          <p><strong>Last name:</strong> <%= @user.last_name %></p>
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-primary mt-3" %>
+        </div>
+
+        <div class="me-2">
+          <% if @user.profile_photo.attached? %>
+            <%= image_tag url_for(@user.profile_photo),
+                class: "rounded-circle border shadow",
+                style: "width: 150px; height: 150px; object-fit: cover;" %>
+          <% else %>
+            <p>No profile photo uploaded.</p>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
