@@ -10,7 +10,7 @@
 
     <% if @my_offers.any? %>
       <% @my_offers.each do |booking| %>
-        <div data-controller="reveal-phone-number" class="card p-3 mb-3">
+        <div data-controller="reveal-phone-number" class="card p-3 mb-3 card-body">
           <p><strong>Tool:</strong> <%= booking.tool.name %></p>
           <p><strong>Owner:</strong> <%= booking.tool.user.first_name %></p>
           <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
