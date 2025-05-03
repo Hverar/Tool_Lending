@@ -47,7 +47,7 @@
           <li class="list-inline-item">Max Price: $<%= params[:max_price] %></li>
         <% end %>
       </ul>
-      <%= link_to "Clear Filters", tools_path, class: "btn btn-sm btn-outline-secondary mt-2" %>
+      <%= link_to "Clear Filters", tools_path, class: "btn btn-sm btn btn-outline-warning mt-2" %>
     </div>
   <% end %>
 
@@ -81,7 +81,8 @@
                 <% end %>
               </div>
 
-              <%= link_to "View", tool_path(tool), class: "btn btn-success btn-sm mt-3 w-100 rounded-pill" %>
+              <%= link_to "View", tool_path(tool), class: "btn btn-warning btn-sm mt-3 w-100 rounded-pill" %>
+
             </div>
           </div>
         </div>
@@ -90,4 +91,10 @@
   <% else %>
     <p class="text-center mt-5">No tools available yet. Try adjusting your filters.</p>
   <% end %>
+
+  <div class="text-center mt-5">
+    <%= link_to new_tool_path, class: "btn btn-outline-warning" do %>
+      <i class="fa-solid fa-screwdriver-wrench"></i> Add a tool
+    <% end %>
+  </div>
 </div>

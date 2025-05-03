@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.1].define(version: 2025_05_03_195634) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,7 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_03_195634) do
     t.bigint "tool_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
+    t.string "status", default: "pending"
     t.index ["tool_id"], name: "index_bookings_on_tool_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -74,6 +76,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_03_195634) do
     t.datetime "updated_at", null: false
     t.decimal "tool_price", precision: 8, scale: 2
     t.bigint "owner_id"
+    t.string "status"
     t.index ["owner_id"], name: "index_tools_on_owner_id"
     t.index ["user_id"], name: "index_tools_on_user_id"
   end

@@ -13,10 +13,10 @@ $font-size-base:         1rem;
 // Colors
 $body-color: $gray;
 $primary:    $blue;
-$success:    $green;
+$success:    #CC7351;
 $info:       $yellow;
 $danger:     $red;
-$warning:    $orange;
+$warning:    #E08F62;
 
 // Buttons & inputs' radius
 $border-radius-sm:            .0625rem;
@@ -26,3 +26,4 @@ $border-radius-xl:            .5rem;
 $border-radius-xxl:           1rem;
 
 // Override other variables below!
+@import "bootstrap"
