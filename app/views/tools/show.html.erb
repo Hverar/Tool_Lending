@@ -1,7 +1,6 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-8">
-
       <div class="card-body rounded p-4 shadow">
 
         <% if @tool.photo.attached? %>
@@ -38,16 +37,9 @@
             <% end %>
           <% else %>
             <p class="text-muted">You must have an accepted booking to rate this tool.</p>
-          <h5 class="mt-4">Rate this tool</h5>
-          <%= form_with model: [@tool, Rating.new], local: true do |f| %>
-            <div class="mb-3 d-flex align-items-center gap-3">
-              <%= f.select :score, options_for_select(1..5), {}, class: "form-select w-auto" %>
-              <%= f.submit "Submit Rating", class: "btn btn-outline-success btn-sm" %>
-
-            </div>
-
           <% end %>
         <% end %>
+
         <% if current_user == @tool.user %>
           <div class="alert alert-warning">You cannot book your own tool.</div>
         <% else %>
