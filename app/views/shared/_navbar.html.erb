@@ -26,9 +26,11 @@
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if current_user.profile_photo.attached? %>
-                <%= image_tag url_for(current_user.profile_photo), class: "rounded-circle", alt: "Profile", style: "height: 45px; width: 45px; object-fit: cover;" %>
+                <%= cl_image_tag @user.profile_photo.key,
+                  class: "rounded-circle border shadow",
+                  style: "width: 150px; height: 150px; object-fit: cover;" %>
               <% else %>
-                <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "rounded-circle", alt: "Default avatar", style: "height: 45px; width: 45px;" %>
+                <%= image_tag("pfp-default.jpg", class: "avatar", alt: "default avatar", style: "height: 40px; width: 40px;") %>
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
