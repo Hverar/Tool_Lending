@@ -6,18 +6,23 @@ class ToolsController < ApplicationController
   def index
     @tools = Tool.all
 
+    if params[:query].present?
+      @tools = @tools.where("name ILIKE ? OR description ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    end
+
     if params[:condition].present?
       @tools = @tools.where(condition: params[:condition])
     end
 
     if params[:min_price].present?
-      @tools = @tools.where("tool_price >= ?", params[:min_price])
+      @tools = @tools.where("tool_price >= ?", params[:min_price].to_f)
     end
 
     if params[:max_price].present?
-      @tools = @tools.where("tool_price <= ?", params[:max_price])
+      @tools = @tools.where("tool_price <= ?", params[:max_price].to_f)
     end
   end
+
 
   def new
     @tool = Tool.new
