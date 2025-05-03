@@ -3,9 +3,11 @@
     <div class="col-8">
       <div class="bg-white rounded p-4 shadow">
         <div class="card-tool-show">
-          <% if @tool.photo.attached? %>
-            <%= cl_image_tag @tool.photo.key, height: 300, crop: :fit, class: "img-fluid mb-4" %>
-          <% end %>
+            <% if @tool.photo.attached? %>
+              <%= cl_image_tag @tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
+            <% else %>
+              <%= image_tag("tool-default.png", height: 150, crop: :fit, class: "img-fluid p-2") %>
+            <% end %>
 
           <div class="card-tool-infos">
             <div class="card-tool-title d-flex justify-content-between">
@@ -32,21 +34,20 @@
                 </ul>
               </div>
             <% end %>
-
+            <hr>
             <% if current_user == @tool.user %>
               <div class="alert alert-warning">You cannot book your own tool.</div>
             <% else %>
               <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
 
               <% if existing_booking.present? %>
-                <div class="alert alert-info mt-3">
-                  You've already made a booking for this tool.
-                </div>
-
+                  <p style="font-weight:bold">
+                    You have booked this tool.
+                  </p>
                 <%= button_to "Cancel Booking", booking_path(existing_booking),
                       method: :delete,
                       data: { confirm: "Are you sure you want to cancel your booking?" },
-                      class: "btn btn-danger mt-2" %>
+                      class: "btn btn-danger" %>
               <% else %>
                 <%= render 'bookings/form', tool: @tool, booking: @booking %>
               <% end %>
