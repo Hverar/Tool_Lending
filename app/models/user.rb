@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :tools
   has_many :bookings
+  has_one_attached :profile_photo
 
   def owner?
     role == 'owner'

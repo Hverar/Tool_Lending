@@ -5,6 +5,18 @@ class BookingsController < ApplicationController
     @booking = Booking.new
   end
 
+  def accept
+    booking = Booking.find(params[:id])
+    booking.update(status: "accepted")
+    redirect_back fallback_location: user_tools_path, notice: "Booking accepted."
+  end
+
+  def decline
+    booking = Booking.find(params[:id])
+    booking.update(status: "declined")
+    redirect_back fallback_location: user_tools_path, alert: "Booking declined."
+  end
+
   def update
     @booking = Booking.find(params[:id])
 
@@ -18,6 +30,11 @@ class BookingsController < ApplicationController
       redirect_to root_path, alert: "Unauthorized."
     end
   end
+
+  def my_bookings
+    @bookings = current_user.bookings.includes(:tool)
+  end
+
 
   def create
     @booking = Booking.new(booking_params)

@@ -1,15 +1,9 @@
 <div class="container mt-5">
   <h1 class="mb-4">My Tools</h1>
 
-  <div class="d-flex justify-content-center gap-3 mb-4">
-    <%= link_to "Listed Tools", user_tools_path(view: "tools"), class: "btn btn-outline-primary #{params[:view] != 'offers' ? 'active' : ''}" %>
-    <%= link_to "Your Offers", user_tools_path(view: "offers"), class: "btn btn-outline-primary #{params[:view] == 'offers' ? 'active' : ''}" %>
-  </div>
-
   <div class="d-flex justify-content-center mt-2 mb-4">
     <%= link_to "← Back to All Tools", tools_path, class: "btn btn-outline-secondary" %>
   </div>
-
 
   <% if params[:view] == "offers" %>
     <h2 class="mb-3">Your Booking Requests</h2>
@@ -59,8 +53,26 @@
       <h2 class="mt-5">Pending Booking Requests</h2>
       <% @pending_bookings.each do |booking| %>
         <div class="card p-3 mb-3">
+
           <p><strong>Tool:</strong> <%= booking.tool.name %></p>
-          <p><strong>Requested by:</strong> <%= booking.user.email %></p>
+
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <% if booking.user.profile_photo.attached? %>
+              <%= image_tag url_for(booking.user.profile_photo),
+                class: "rounded-circle border",
+                style: "width: 60px; height: 60px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier",
+                class: "rounded-circle border",
+                style: "width: 60px; height: 60px;" %>
+            <% end %>
+
+            <div>
+              <p class="mb-0"><strong><%= booking.user.first_name %> <%= booking.user.last_name %></strong></p>
+              <p class="text-muted mb-0" style="font-size: 0.9rem;"><%= booking.user.email %></p>
+            </div>
+          </div>
+
           <p><strong>From:</strong> <%= booking.start_date %> to <%= booking.end_date %></p>
           <p><strong>Status:</strong>
             <span class="badge bg-warning">

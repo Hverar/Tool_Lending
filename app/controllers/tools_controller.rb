@@ -1,11 +1,10 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: [:show]
   before_action :authenticate_user!
-  before_action :authorize_owner!, only: [:new, :create, :edit, :update]
+  before_action :authorize_owner!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @tools = Tool.all
-    @tools = current_user.owner? ? Tool.all : Tool.available
 
     if params[:condition].present?
       @tools = @tools.where(condition: params[:condition])
@@ -62,6 +61,16 @@ class ToolsController < ApplicationController
     @my_offers = current_user.bookings.includes(:tool)
   end
 
+  def destroy
+    @tool = Tool.find(params[:id])
+    if @tool.user == current_user
+      @tool.destroy
+      redirect_to tools_path, notice: "Tool was successfully deleted."
+    else
+      redirect_to tools_path, alert: "You are not authorized to delete this tool."
+    end
+  end
+
   private
 
   def set_tool
@@ -73,8 +82,8 @@ class ToolsController < ApplicationController
   end
 
   def authorize_owner!
-    return if current_user&.owner?
+    # return if current_user&.owner?
 
-    redirect_to root_path, alert: "You are not authorized to perform this action."
+    # redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 end
