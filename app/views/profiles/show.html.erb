@@ -14,11 +14,13 @@
 
         <div class="me-2">
           <% if @user.profile_photo.attached? %>
-            <%= image_tag url_for(@user.profile_photo),
-                class: "rounded-circle border shadow",
-                style: "width: 150px; height: 150px; object-fit: cover;" %>
+            <%= cl_image_tag @user.profile_photo.key,
+              class: "rounded-circle border shadow",
+              style: "width: 150px; height: 150px; object-fit: cover;" %>
           <% else %>
-            <p>No profile photo uploaded.</p>
+            <%= image_tag("pfp-default.jpg",
+              class: "rounded-circle border shadow",
+              style: "width: 150px; height: 150px; object-fit: cover;") %>
           <% end %>
         </div>
 
