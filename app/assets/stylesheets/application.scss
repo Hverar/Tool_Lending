@@ -81,7 +81,13 @@ h1.display-1 {
   font-weight: 700;
   letter-spacing: -1px;
 }
+.custom-input {
+  background: #DED7B1;
+}
 
+.custom-input-form {
+  background: #FCE7C8;
+}
 @media (max-width: 768px) {
   .search-form {
     flex-direction: column;

@@ -17,13 +17,27 @@
 
         <% avg_rating = @tool.ratings.average(:score)&.round(1) %>
         <% if avg_rating %>
-          <p class="mb-3 text-warning">Average Rating: ★ <%= avg_rating %> / 5</p>
+          <p class="mb-3" style="color: black;">Average Rating: ★ <%= avg_rating %> / 5</p>
         <% else %>
           <p class="mb-3 text-muted">No ratings yet</p>
         <% end %>
 
-        <%# Show rating form only for signed-in non-owners %>
         <% if current_user && current_user != @tool.user %>
+          <% existing_rating = @tool.ratings.find_by(user_id: current_user.id) %>
+          <% accepted_booking = @tool.bookings.exists?(user_id: current_user.id, status: "accepted") %>
+
+          <% if existing_rating %>
+            <p class="text-muted">You’ve already rated this tool: ★ <%= existing_rating.score %> / 5</p>
+          <% elsif accepted_booking %>
+            <h5 class="mt-4">Rate this tool</h5>
+            <%= form_with model: [@tool, Rating.new], local: true do |f| %>
+              <div class="mb-3 d-flex align-items-center gap-3">
+                <%= f.select :score, options_for_select(1..5), {}, class: "form-select w-auto" %>
+                <%= f.submit "Submit Rating", class: "btn btn-outline-success btn-sm" %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted">You must have an accepted booking to rate this tool.</p>
           <h5 class="mt-4">Rate this tool</h5>
           <%= form_with model: [@tool, Rating.new], local: true do |f| %>
             <div class="mb-3 d-flex align-items-center gap-3">
@@ -31,12 +45,9 @@
               <%= f.submit "Rate", class: "btn btn-outline-success btn-sm rounded-pill px-3" %>
 
             </div>
+
           <% end %>
         <% end %>
-
-        <hr>
-
-        <%# Booking Section %>
         <% if current_user == @tool.user %>
           <div class="alert alert-warning">You cannot book your own tool.</div>
         <% else %>

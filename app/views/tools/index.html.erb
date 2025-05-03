@@ -3,26 +3,26 @@
     <h1 class="mb-0 me-auto" style="white-space: nowrap;">Tool Lending</h1>
 
     <%= form_with url: tools_path, method: :get, local: true, class: "d-flex align-items-center gap-2 w-100 w-md-auto" do |f| %>
-      <%= f.text_field :query, placeholder: "Search tools...", class: "form-control form-control-lg rounded-pill px-4" %>
+      <%= f.text_field :query, placeholder: "Search tools...", class: "form-control custom-input form-control-lg rounded-pill px-4" %>
 
       <div class="dropdown">
-        <button class="btn btn-outline-secondary btn-lg rounded-pill px-4" type="button" data-bs-toggle="dropdown">
+        <button class="btn btn-outline-success btn-lg rounded-pill px-4" type="button" data-bs-toggle="dropdown">
           Filters
         </button>
         <div class="dropdown-menu p-4">
           <div class="mb-3">
             <%= f.label :condition, "Condition", class: "form-label" %>
-            <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select" %>
+            <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select custom-input" %>
           </div>
           <div class="mb-3">
             <%= f.label :min_price, "Min Price", class: "form-label" %>
-            <%= f.number_field :min_price, value: params[:min_price], class: "form-control", placeholder: "$" %>
+            <%= f.number_field :min_price, value: params[:min_price], class: "form-control custom-input", placeholder: "$" %>
           </div>
           <div class="mb-3">
             <%= f.label :max_price, "Max Price", class: "form-label" %>
-            <%= f.number_field :max_price, value: params[:max_price], class: "form-control", placeholder: "$" %>
+            <%= f.number_field :max_price, value: params[:max_price], class: "form-control custom-input", placeholder: "$" %>
           </div>
-          <%= f.submit "Apply Filters", class: "btn btn-primary w-100" %>
+          <%= f.submit "Apply Filters", class: "btn btn-warning w-100" %>
         </div>
       </div>
     <% end %>
@@ -75,7 +75,7 @@
 
                 <% avg_rating = tool.ratings.average(:score)&.round(1) %>
                 <% if avg_rating %>
-                  <p class="mb-0 text-warning">★ <%= avg_rating %> / 5</p>
+                  <p class="mb-0" style="color: black;">★ <%= avg_rating %> / 5</p>
                 <% else %>
                   <p class="mb-0 text-muted">No ratings yet</p>
                 <% end %>
