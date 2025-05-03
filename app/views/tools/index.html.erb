@@ -75,7 +75,7 @@
 
                 <% avg_rating = tool.ratings.average(:score)&.round(1) %>
                 <% if avg_rating %>
-                  <p class="mb-0 text-warning">★ <%= avg_rating %> / 5</p>
+                  <p class="mb-0" style="color: black;">★ <%= avg_rating %> / 5</p>
                 <% else %>
                   <p class="mb-0 text-muted">No ratings yet</p>
                 <% end %>
