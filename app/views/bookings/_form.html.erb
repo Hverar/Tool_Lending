@@ -1,13 +1,11 @@
 <%= simple_form_for([@tool, @booking]) do |f| %>
-  <div class="mb-3">
-    <%= f.input :start_date, as: :date, label: "Start Date" %>
-  </div>
+  <%= f.input :start_date,
+              as: :string,
+              input_html: { data: { controller: "datepicker" } } %>
 
-  <div class="mb-3">
-    <%= f.input :end_date, as: :date, label: "End Date" %>
-  </div>
+  <%= f.input :end_date,
+              as: :string,
+              input_html: { data: { controller: "datepicker" } } %>
 
-  <div class="d-grid gap-2">
-    <%= f.button :submit, "Book This Tool", class: "btn btn-primary" %>
-  </div>
+  <%= f.submit "Book", class: "btn btn-primary" %>
 <% end %>
