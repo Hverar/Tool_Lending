@@ -3,8 +3,8 @@
     <h1 class="fw-bold display-1 text-shadow">Tool Lending</h1>
   </div>
 
-  <div class="text-center py-4" style="margin-top: -1rem;">
-    <blockquote class="custom-quote" style="max-width: 800px; margin: 0 auto;">
+  <div class="text-center pt-4 pb-1">
+    <blockquote class="custom-quote" style="max-width: 900px; margin: 0 auto;">
       <p class="mb-1">
         “You can dream, create, design, and build the most wonderful place in the world. But it requires people to make the dream a reality.”
       </p>
@@ -14,25 +14,36 @@
 
 
   <div class="card-body text text-center py-5">
-    <%= form_with url: tools_path, method: :get, local: true, class: "row g-2 justify-content-center mb-4" do |f| %>
-      <div class="col-auto">
-        <%= f.select :condition, options_for_select(["Condition", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select menu" %>
-      </div>
-      <div class="col-auto">
-        <%= f.number_field :min_price, placeholder: "Min $", value: params[:min_price], class: "form-control menu" %>
-      </div>
-      <div class="col-auto">
-        <%= f.number_field :max_price, placeholder: "Max $", value: params[:max_price], class: "form-control menu" %>
-      </div>
-      <div class="col-auto">
-        <%= f.submit "Search", class: "btn btn-outline-warning" %>
-      </div>
-    <% end %>
+    <div class="container ">
+      <%= form_with url: tools_path, method: :get, local: true, class: "d-flex align-items-center gap-2 w-100 w-md-auto" do |f| %>
+        <%= f.text_field :query, placeholder: "Search tools...", class: "form-control form-control-lg rounded-pill px-4" %>
+
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary btn-lg rounded-pill px-4" type="button" data-bs-toggle="dropdown">
+            Filters
+          </button>
+          <div class="dropdown-menu p-4">
+            <div class="mb-3">
+              <%= f.label :condition, "Condition", class: "form-label" %>
+              <%= f.select :condition, options_for_select(["", "excellent", "good", "fair"], params[:condition]), {}, class: "form-select" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :min_price, "Min Price", class: "form-label" %>
+              <%= f.number_field :min_price, value: params[:min_price], class: "form-control", placeholder: "$" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :max_price, "Max Price", class: "form-label" %>
+              <%= f.number_field :max_price, value: params[:max_price], class: "form-control", placeholder: "$" %>
+            </div>
+            <%= f.submit "Apply Filters", class: "btn btn-primary w-100" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
     <div class="d-flex justify-content-center gap-3 mt-4">
-      <%= link_to "View All Tools", tools_path, class: "btn btn-warning btn-lg px-5 py-2" %>
-      <%= link_to "Your Tools", user_tools_path, class: "btn btn-outline-success" %>
-      <%= link_to "List a Tool", new_tool_path, class: "btn btn-outline-warning btn-lg px-5 py-2" %>
+      <%= link_to "View All Tools", tools_path, class: "btn btn-warning btn-lg rounded-pill px-4" %>
+      <%= link_to "List a Tool", new_tool_path, class: "btn btn-outline-warning btn-lg rounded-pill px-4" %>
     </div>
 
 
