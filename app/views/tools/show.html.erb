@@ -2,63 +2,59 @@
   <div class="row">
     <div class="col-8">
       <div class="bg-white rounded p-4 shadow">
-        <div class="card-tool-show">
-            <% if @tool.photo.attached? %>
-              <%= cl_image_tag @tool.photo.key, height: 150, crop: :fit, class: "img-fluid p-2" %>
-            <% else %>
-              <%= image_tag("tool-default.png", height: 150, crop: :fit, class: "img-fluid p-2") %>
-            <% end %>
 
-          <div class="card-tool-infos">
-            <div class="card-tool-title d-flex justify-content-between">
-              <div>
-                <h2><%= @tool.name %></h2>
-              </div>
-              <div>
-                <h2>$<%= number_with_precision(@tool.tool_price, precision: 2) %>/day</h2>
-              </div>
+        <% if @tool.photo.attached? %>
+          <%= cl_image_tag @tool.photo.key, height: 300, crop: :fit, class: "img-fluid mb-4" %>
+        <% else %>
+          <%= image_tag("tool-default.png", class: "img-fluid mb-4") %>
+        <% end %>
+
+        <h2><%= @tool.name %></h2>
+        <p class="text-success fw-bold">$<%= number_with_precision(@tool.tool_price, precision: 2) %> / day</p>
+        <p><strong>Condition:</strong> <%= @tool.condition %></p>
+        <p><%= @tool.description %></p>
+
+        <% avg_rating = @tool.ratings.average(:score)&.round(1) %>
+        <% if avg_rating %>
+          <p class="mb-3 text-warning">Average Rating: ★ <%= avg_rating %> / 5</p>
+        <% else %>
+          <p class="mb-3 text-muted">No ratings yet</p>
+        <% end %>
+
+        <%# Show rating form only for signed-in non-owners %>
+        <% if current_user && current_user != @tool.user %>
+          <h5 class="mt-4">Rate this tool</h5>
+          <%= form_with model: [@tool, Rating.new], local: true do |f| %>
+            <div class="mb-3 d-flex align-items-center gap-3">
+              <%= f.select :score, options_for_select(1..5), {}, class: "form-select w-auto" %>
+              <%= f.submit "Submit Rating", class: "btn btn-outline-success btn-sm" %>
             </div>
+          <% end %>
+        <% end %>
 
-            <p class="card-tool-condition">Condition: <%= @tool.condition %></p>
-            <p class="card-tool-description"><%= @tool.description %></p>
-          </div>
+        <hr>
 
-          <div class="card-tool-renting mt-4">
-            <% if @booking.errors.any? %>
-              <div class="alert alert-danger">
-                <h5>Booking Error</h5>
-                <ul>
-                  <% @booking.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-            <hr>
-            <% if current_user == @tool.user %>
-              <div class="alert alert-warning">You cannot book your own tool.</div>
-            <% else %>
-              <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
+        <%# Booking Section %>
+        <% if current_user == @tool.user %>
+          <div class="alert alert-warning">You cannot book your own tool.</div>
+        <% else %>
+          <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
 
-              <% if existing_booking.present? %>
-                  <p style="font-weight:bold">
-                    You have booked this tool.
-                  </p>
-                <%= button_to "Cancel Booking", booking_path(existing_booking),
-                      method: :delete,
-                      data: { confirm: "Are you sure you want to cancel your booking?" },
-                      class: "btn btn-danger" %>
-              <% else %>
-                <%= render 'bookings/form', tool: @tool, booking: @booking %>
-              <% end %>
-            <% end %>
-            <div>
-              <% if @tool.user == current_user %>
-                <%= link_to "Delete", tools_path(@tools), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+          <% if existing_booking.present? %>
+            <p class="fw-bold">You have booked this tool.</p>
+            <%= button_to "Cancel Booking", booking_path(existing_booking),
+                  method: :delete,
+                  data: { confirm: "Are you sure you want to cancel your booking?" },
+                  class: "btn btn-danger" %>
+          <% else %>
+            <%= render 'bookings/form', tool: @tool, booking: @booking %>
+          <% end %>
+        <% end %>
+
+        <% if current_user == @tool.user %>
+          <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mt-3" %>
+        <% end %>
+
       </div>
     </div>
 
@@ -72,3 +68,4 @@
     </div>
   </div>
 </div>
+
