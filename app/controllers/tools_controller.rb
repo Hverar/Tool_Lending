@@ -57,8 +57,17 @@ class ToolsController < ApplicationController
   end
 
   def show
+    @tool = Tool.find(params[:id])
     @booking = Booking.new(tool: @tool)
+
+    @show_exact_location = current_user&.bookings&.exists?(tool_id: @tool.id, status: "accepted")
+
+    @markers = [{
+      lat: @tool.latitude,
+      lng: @tool.longitude
+    }]
   end
+
 
   def my_tools
     @tools = current_user.tools

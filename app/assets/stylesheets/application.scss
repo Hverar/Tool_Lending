@@ -10,6 +10,8 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
+
 
 .top-search-bar {
   background: #fff;
@@ -115,4 +117,14 @@ h1.display-1 {
   .btn {
     font-size: 1.1rem;
   }
+}
+
+#tool-map:fullscreen {
+  width: 100%;
+  height: 100%;
+}
+
+#tool-map:-webkit-full-screen {
+  width: 100% ;
+  height: 100%;
 }
