@@ -20,15 +20,26 @@ class BookingsController < ApplicationController
   def update
     @booking = Booking.find(params[:id])
 
+    # Ensure only the owner of the tool can update the booking status
     if @booking.tool.user == current_user
-      if @booking.update(status: params[:status])
-        redirect_to user_tools_path, notice: "Booking was #{params[:status]}!"
+      if @booking.update(booking_params)
+        if @booking.saved_change_to_status? && %w[accepted declined].include?(@booking.status)
+          @booking.update(seen_status: false)
+          flash[:notice] = "Booking status updated to #{@booking.status.capitalize}"
+        end
+        redirect_to user_tools_path(view: "offers")
       else
-        redirect_to user_tools_path, alert: "Update failed."
+        flash[:alert] = "Failed to update booking"
+        render :edit
       end
     else
-      redirect_to root_path, alert: "Unauthorized."
+      flash[:alert] = "You’re not authorized to change this booking."
+      redirect_to root_path
     end
+    if @booking.update(status: params[:booking][:status])
+      if %w[accepted declined].include?(@booking.status)
+        @booking.update(seen_status: false)
+      end
   end
 
   def my_bookings
@@ -75,6 +86,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_date, :end_date)
+    params.require(:booking).permit(:status, :start_date, :end_date)
   end
 end

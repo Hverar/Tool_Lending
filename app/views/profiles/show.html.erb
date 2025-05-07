@@ -5,10 +5,10 @@
 
         <div class="w-75 pe-4">
           <h1 class="card-body mb-4">Account</h1>
-          <p><strong>Email:</strong> <%= @user.email %></p>
-          <p><strong>First name:</strong> <%= @user.first_name %></p>
-          <p><strong>Last name:</strong> <%= @user.last_name %></p>
-          <p><strong>Phone number:</strong> <%= @user.phone_number %></p>
+          <p class="custom-input"><strong>Email:</strong> <%= @user.email %></p>
+          <p class="custom-input"><strong>First name:</strong> <%= @user.first_name %></p>
+          <p class="custom-input"><strong>Last name:</strong> <%= @user.last_name %></p>
+          <p class="custom-input"><strong>Phone number:</strong> <%= @user.phone_number %></p>
           <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-warning mt-3 rounded-pill px-4" %>
         </div>
 
