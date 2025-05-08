@@ -4,6 +4,10 @@ class Tool < ApplicationRecord
   has_many :bookings
   has_many :ratings
 
+  geocoded_by :address
+  after_validation :geocode, if: ->(obj){ obj.address.present? && obj.address_changed? }
+
+
   validates :name, presence: true
   validates :description, presence: true
 
