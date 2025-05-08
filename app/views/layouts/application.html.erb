@@ -19,8 +19,15 @@
     <%= render "shared/navbar" %>
 
     <div class="min-h-screen bg-gray-50 px-6 py-8 max-w-7xl mx-auto">
-      <%# <p class="notice text-green-600 mb-4"><%= notice %></p>
-      <%# <p class="alert text-red-600 mb-4"><%= alert %></p>
+        <% if flash[:notice] %>
+      <div id="flash-notice" class="alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3 z-3">
+        <%= flash[:notice] %>
+      </div>
+        <% elsif flash[:alert] %>
+      <div id="flash-alert" class="alert alert-danger position-fixed top-0 start-50 translate-middle-x mt-3 z-3">
+        <%= flash[:alert] %>
+      </div>
+      <% end %>
 
       <%= render "shared/flashes" %>
       <%= yield %>

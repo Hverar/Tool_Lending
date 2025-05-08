@@ -81,8 +81,17 @@
           </p>
 
           <div class="d-flex gap-2">
-            <%= button_to "Accept", booking_path(booking, status: "accepted"), method: :patch, class: "btn btn-warning btn-sm" %>
-            <%= button_to "Decline", booking_path(booking, status: "declined"), method: :patch, class: "btn btn-success btn-sm" %>
+            <% if current_user == booking.tool.user %>
+            <%= form_with model: booking, url: booking_path(booking), method: :patch, local: true do |f| %>
+              <%= f.hidden_field :status, value: "accepted" %>
+              <%= f.submit "Accept", class: "btn btn-success me-2" %>
+            <% end %>
+
+            <%= form_with model: booking, url: booking_path(booking), method: :patch, local: true do |f| %>
+              <%= f.hidden_field :status, value: "declined" %>
+              <%= f.submit "Decline", class: "btn btn-danger" %>
+            <% end %>
+          <% end %>
           </div>
         </div>
       <% end %>
