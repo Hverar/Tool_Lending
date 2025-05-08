@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_000414) do
     t.bigint "tool_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status", default: "pending"
+    t.string "status"
     t.boolean "seen_status"
     t.index ["tool_id"], name: "index_bookings_on_tool_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
@@ -75,7 +75,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_000414) do
     t.datetime "updated_at", null: false
     t.decimal "tool_price", precision: 8, scale: 2
     t.bigint "owner_id"
-    t.string "status"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "address"
     t.index ["owner_id"], name: "index_tools_on_owner_id"
     t.index ["user_id"], name: "index_tools_on_user_id"
   end
@@ -90,7 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_000414) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "role", default: "consumer"
+    t.string "role"
     t.string "phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
