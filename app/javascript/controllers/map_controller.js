@@ -14,7 +14,8 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v11"
+      style: "mapbox://styles/mapbox/light-v10"
+
     })
 
     this.map.addControl(new mapboxgl.FullscreenControl())
