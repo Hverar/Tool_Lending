@@ -1,0 +1,5 @@
+<div style="text-align: center;">
+  <strong><%= tool.name %></strong><br>
+  $<%= number_with_precision(tool.tool_price, precision: 2) %> / day<br>
+  <%= link_to "View", tool_path(tool), class: "btn btn-sm btn-outline-primary mt-1" %>
+</div>

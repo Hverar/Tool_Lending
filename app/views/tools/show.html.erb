@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-8">
       <div class="card-body p-4 shadow" style="border-radius: 2rem;">
-
         <% if @tool.photo.attached? %>
           <%= cl_image_tag @tool.photo.key, height: 300, crop: :fit, class: "img-fluid mb-4" %>
         <% else %>
@@ -51,13 +50,10 @@
         <% if current_user == @tool.user %>
           <div class="alert alert-warning rounded-pill">You cannot book your own tool.</div>
         <% else %>
-          <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first if current_user %>
-          <% if existing_booking.present? %>
+          <% existing_booking = current_user.bookings.where(tool_id: @tool.id).order(created_at: :desc).first %>
+          <% if existing_booking %>
             <p class="fw-bold">You have booked this tool.</p>
-            <%= button_to "Cancel Booking", booking_path(existing_booking),
-                  method: :delete,
-                  data: { confirm: "Are you sure you want to cancel your booking?" },
-                  class: "btn btn-danger rounded-pill" %>
+            <%= button_to "Cancel Booking", booking_path(existing_booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill" %>
           <% else %>
             <%= render 'bookings/form', tool: @tool, booking: @booking %>
           <% end %>
@@ -66,16 +62,23 @@
         <% if current_user == @tool.user %>
           <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
         <% end %>
-
       </div>
     </div>
 
     <div class="col-4">
-      <div class="card-body shadow text-center d-flex flex-column gap-3" style="border-radius: 2rem; padding: 2rem;">
+      <div class="card-body shadow text-center d-flex flex-column gap-3" style="border-radius: 2rem; padding: 2rem; position: relative;">
         <%= link_to "Back to all tools", tools_path, class: "btn btn-warning rounded-pill" %>
         <% if current_user == @tool.user %>
           <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary rounded-pill" %>
         <% end %>
+
+        <div class="mt-4 position-relative"
+             data-controller="map"
+             data-map-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+             data-map-show-exact-location-value="<%= @show_exact_location %>"
+             data-map-markers-value="<%= @markers.to_json %>"
+             style="height: 500px; border-radius: 2rem; overflow: hidden;">
+        </div>
       </div>
     </div>
   </div>
