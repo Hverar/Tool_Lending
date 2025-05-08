@@ -59,14 +59,14 @@
                   data: { confirm: "Are you sure you want to cancel your booking?" },
                   class: "btn btn-danger rounded-pill" %>
           <% else %>
-            <%= render 'bookings/form', tool: @tool, booking: @booking %>
+            <%= render 'booking/form', tool: @tool, booking: @booking %>
           <% end %>
         <% end %>
 
         <%# if current_user == @tool.user %>
         <%# using pundit instead: %>
         <% if policy(@tool).destroy? %>
-          <%= link_to "Delete", tool_path(@tool), method: :delete, class: "btn btn-danger rounded-pill mt-3" %>
+          <%= button_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
         <% end %>
 
       </div>
@@ -84,5 +84,3 @@
     </div>
   </div>
 </div>
-
-<% console %>

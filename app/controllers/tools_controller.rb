@@ -69,8 +69,10 @@ class ToolsController < ApplicationController
 
   def destroy
     set_tool
-    authorize @tool
-    @tool.destroy
+    if authorize @tool
+      @tool.destroy
+      redirect_to tools_path, notice: "Tool destroyed."
+    end
     # if @tool.user == current_user
     #   @tool.destroy
     #   redirect_to tools_path, notice: "Tool was successfully deleted."
