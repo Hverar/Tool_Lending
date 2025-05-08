@@ -43,7 +43,6 @@
                 <%= f.submit "Rate", class: "btn btn-outline-success btn-sm rounded-pill px-3" %>
               </div>
             <% end %>
-
           <% end %>
         <% end %>
 
@@ -55,12 +54,14 @@
             <p class="fw-bold">You have booked this tool.</p>
             <%= button_to "Cancel Booking", booking_path(existing_booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill" %>
           <% else %>
-            <%= render 'bookings/form', tool: @tool, booking: @booking %>
+            <%= render 'booking/form', tool: @tool, booking: @booking %>
           <% end %>
         <% end %>
 
-        <% if current_user == @tool.user %>
-          <%= link_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
+        <%# if current_user == @tool.user %>
+        <%# using pundit instead: %>
+        <% if policy(@tool).destroy? %>
+          <%= button_to "Delete", tool_path(@tool), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill mt-3" %>
         <% end %>
       </div>
     </div>
@@ -68,7 +69,9 @@
     <div class="col-4">
       <div class="card-body shadow text-center d-flex flex-column gap-3" style="border-radius: 2rem; padding: 2rem; position: relative;">
         <%= link_to "Back to all tools", tools_path, class: "btn btn-warning rounded-pill" %>
-        <% if current_user == @tool.user %>
+        <%# if current_user == @tool.user %>
+        <%# using pundit instead: %>
+        <% if policy(@tool).edit? %>
           <%= link_to "Edit Tool", edit_tool_path(@tool), class: "btn btn-outline-secondary rounded-pill" %>
         <% end %>
 

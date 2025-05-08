@@ -25,18 +25,17 @@ class ToolsController < ApplicationController
 
   def new
     @tool = Tool.new
+    authorize @tool
   end
 
   def edit
     @tool = current_user.tools.find(params[:id])
-  end
-
-  def edit
-    @tool = current_user.tools.find(params[:id])
+    authorize @tool
   end
 
   def update
     @tool = current_user.tools.find(params[:id])
+    authorize @tool
     if @tool.update(tool_params)
       redirect_to tool_path(@tool), notice: "Tool updated successfully!"
     else
@@ -47,6 +46,7 @@ class ToolsController < ApplicationController
   def create
     @tool = Tool.new(tool_params)
     @tool.user = current_user
+    authorize @tool
 
     if @tool.save
       redirect_to tools_path, notice: "Tool listed successfully!"
@@ -58,6 +58,8 @@ class ToolsController < ApplicationController
   def show
     @tool = Tool.find(params[:id])
     @booking = Booking.new(tool: @tool)
+
+    authorize @tool
 
     @show_exact_location = current_user&.bookings&.exists?(tool_id: @tool.id, status: "accepted")
 
@@ -75,13 +77,17 @@ class ToolsController < ApplicationController
   end
 
   def destroy
-    @tool = Tool.find(params[:id])
-    if @tool.user == current_user
+    set_tool
+    if authorize @tool
       @tool.destroy
-      redirect_to tools_path, notice: "Tool was successfully deleted."
-    else
-      redirect_to tools_path, alert: "You are not authorized to delete this tool."
+      redirect_to tools_path, notice: "Tool destroyed."
     end
+    # if @tool.user == current_user
+    #   @tool.destroy
+    #   redirect_to tools_path, notice: "Tool was successfully deleted."
+    # else
+    #   redirect_to tool_path(tool), alert: "You are not authorized to delete this tool."
+    # end
   end
 
   private
