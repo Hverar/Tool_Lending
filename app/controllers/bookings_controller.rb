@@ -20,7 +20,6 @@ class BookingsController < ApplicationController
   def update
     @booking = Booking.find(params[:id])
 
-    # Ensure only the owner of the tool can update the booking status
     if @booking.tool.user == current_user
       if @booking.update(booking_params)
         if @booking.saved_change_to_status? && %w[accepted declined].include?(@booking.status)
@@ -36,11 +35,8 @@ class BookingsController < ApplicationController
       flash[:alert] = "You’re not authorized to change this booking."
       redirect_to root_path
     end
-    if @booking.update(status: params[:booking][:status])
-      if %w[accepted declined].include?(@booking.status)
-        @booking.update(seen_status: false)
-      end
   end
+
 
   def my_bookings
     @bookings = current_user.bookings.includes(:tool)
