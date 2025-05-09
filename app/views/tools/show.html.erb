@@ -54,7 +54,7 @@
             <p class="fw-bold">You have booked this tool.</p>
             <%= button_to "Cancel Booking", booking_path(existing_booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger rounded-pill" %>
           <% else %>
-            <%= render 'booking/form', tool: @tool, booking: @booking %>
+            <%= render 'bookings/form', tool: @tool, booking: @booking %>
           <% end %>
         <% end %>
 

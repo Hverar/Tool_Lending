@@ -1,35 +1,38 @@
-<h2>Edit Your Profile</h2>
+<div class="container  py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4 card-body shadow">
+        <h2>Edit Your Profile</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
-  <%= f.error_notification %>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+          <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true %>
+          <div class="form-inputs">
+            <%= f.input :email, required: true %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <% end %>
 
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :phone_number %>
-    <%= f.input :profile_photo, as: :file, label: "Upload Profile Photo" %>
+            <%= f.input :first_name %>
+            <%= f.input :last_name %>
+            <%= f.input :phone_number %>
+            <%= f.input :profile_photo, as: :file, label: "Upload Profile Photo" %>
 
-    <%= f.input :role, collection: [['Consumer', 'consumer'], ['Owner', 'owner']], prompt: 'Select your role' %>
+            <%= f.input :role, collection: [['Consumer', 'consumer'], ['Owner', 'owner']], prompt: 'Select your role' %>
 
-    <%= f.input :password, hint: "Leave blank if you don't want to change it" %>
-    <%= f.input :password_confirmation %>
-    <%= f.input :current_password, hint: "We need your current password to confirm your changes" %>
+            <%= f.input :password, hint: "Leave blank if you don't want to change it" %>
+            <%= f.input :password_confirmation %>
+            <%= f.input :current_password, hint: "We need your current password to confirm your changes" %>
+          </div>
+          <div class="form-actions mt-3 d-flex flex-row align-items-center justify-content-between">
+            <%= f.button :submit, "Update", class: "btn btn-warning mt-3 rounded-pill px-4" %>
+            <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mt-3 rounded-pill px-4" %>
+          </div>
+        <% end %>
+        &nbsp;
+        <%= link_to "Back", user_profile_path, class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions mt-3">
-    <%= f.button :submit, "Update", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-<p>
-  <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-</p>
-
-<%= link_to "Back", user_profile_path, class: "btn btn-outline-secondary" %>
+</div>
