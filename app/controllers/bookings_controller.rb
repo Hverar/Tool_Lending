@@ -26,7 +26,7 @@ class BookingsController < ApplicationController
           @booking.update(seen_status: false)
           flash[:notice] = "Booking status updated to #{@booking.status.capitalize}"
         end
-        redirect_to user_tools_path(view: "offers")
+        redirect_to user_tools_path
       else
         flash[:alert] = "Failed to update booking"
         render :edit
